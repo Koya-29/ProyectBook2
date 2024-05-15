@@ -1,0 +1,116 @@
+/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import "assets/scss/template1.scss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+
+
+:root {
+  // home
+  --home-image-opacity: 0.5;
+  //
+  --bg: #f1f5f9;
+  --bg_a: #f5f6fa;
+  --bg_ac: white;
+  /* COLORES DE BORDE */
+  --bc: #e5e6eb;
+  --bc2: #bbbbbb;
+  --h-navbar: 56px;
+
+  --header-guia: #003e81;
+
+  /* TEMA */
+
+  /* white */
+  --slide-bg: white;
+  --slide-link-color: #6d6d6d;
+  --slide-bg-sub: white;
+  --slide-link-hover-bg: #ebf2ff;
+  --slide-link-hover-color: #6d6d6d;
+  --slide-padding: 0;
+  --slide-active-bg: #ebf2ff;
+  --slide-active-color: #4b83fe;
+  --slide-active-shadow: #4b83fe;
+  --slide-active-radius: 0;
+
+  --navbar-bg: white;
+  --navbar-border-color: #e5e6eb;
+  --navbar-color: #212529;
+  --carrusel: #212529;
+
+  --pendiente: #e91e63;
+  --aceptado: #ff9800;
+  --atendido: #48c54d;
+  --entregado: #2196f3;
+  --confirmado: #3f51b5;
+  --bloqueado: red;
+
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+
+  --fuse-bg-card: #ffffff;
+  --fuse-border: rgba(241, 245, 249, 0.12);
+  --fuse-text-default: #1e293b;
+  --border-color: rgba(0, 0, 0, 0.125);
+
+  --ngx-contextmenu-text-color: black;
+  --ngx-contextmenu-font-family: "Montserrat", sans-serif;
+  --ngx-contextmenu-item-padding: 0.4rem 0.4rem 0.4rem 0;
+  --ngx-contextmenu-font-size: 1.15rem;
+  --ngx-contextmenu-icon-size: 1.3rem;
+  --ngx-contextmenu-border-radius: 10px;
+
+  // TABLES
+  --table-box-bg: #ffffff;
+  --table-box-border: #f2f3f4;
+  --table-box-shadow: 0 2px 4px #0000000d;
+  --table-box-color: #222222;
+
+  --table-box-cell-border: #dee2e6;
+
+  --table-box-active-bg: #ddedff;
+
+  // MODAL
+  --modal-bg: white;
+  --modal-shadow: 2px 6px 10px #5c5c5d;
+
+  // INPUT
+  --form-control-color: black;
+  --form-control-bg: #fdfdfd;
+  --form-control-border: #d8d8d8;
+  // PRIMARY
+  --form-control-primary-bg: #d9ebff;
+  --form-control-primary-color: #007bff;
+  // --form-control-primary-bg: #f5f5f5;
+  // --form-control-primary-color: #333;
+
+  --border-color-detalle: #333;
+
+  --border-color-2: #bbbbbb;
+
+  --spinner-bg: #ffffffa9;
+  --spiner-color: #333;
+
+  --text-secondary: #686868;
+
+  --loading-bg: rgba(255, 255, 255, 0.75);
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  background: var(--bg);
+  color: var(--fuse-text-default);
+
+  .nav {
+    --bs-nav-link-color: #969696;
+  }
+
+  .nav-tabs {
+    --bs-nav-tabs-link-active-color: #007bff;
+    --bs-nav-tabs-link-active-bg: #f5f6fa;
+    --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #f5f6fa;
+  }
+}
+
+

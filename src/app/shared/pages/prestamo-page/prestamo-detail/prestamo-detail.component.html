@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <div class="modal-title">
+    DATA LOAN
+  </div>
+  <button type="button" class="btn-close" (click)="cerrar()"></button>
+</div>
+<div class="modal-body">
+  <table class="table">
+    <tbody>
+
+      <tr>
+        <td> <b>Libro:</b> </td>
+        <td> {{prestamo.book?.titulo}} </td>
+      </tr>
+
+      <tr>
+        <td> <b>Estudiante:</b> </td>
+        <td>
+          {{ prestamo.student?.nombre }}
+          {{ prestamo.student?.apellidos }}
+        </td>
+      </tr>
+
+      <tr>
+        <td> <b>F. Prestamo:</b> </td>
+        <td> {{ prestamo.fecha_prestamo | date: 'dd/MM/yyyy'}} </td>
+      </tr>
+
+      <tr>
+        <td> <b>F. Devolución:</b> </td>
+        <td> {{ prestamo.fecha_devolucion | date: 'dd/MM/yyyy'}} </td>
+      </tr>
+
+      <tr>
+        <td> <b>IdLoan:</b> </td>
+        <td> {{ prestamo.idprestamo }} </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

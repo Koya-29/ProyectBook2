@@ -1,0 +1,54 @@
+<div class="__box">
+    <div class="_box" (click)="select('A')" [ngClass]="{'active': selected == 'A'}">A</div>
+    <div class="_box" (click)="select('B')" [ngClass]="{'active': selected == 'B'}">B</div>
+    <div class="_box" (click)="select('C')" [ngClass]="{'active': selected == 'C'}">C</div>
+</div>
+
+<div>
+    <div>
+        <h1>Author List</h1>
+    </div>
+    <hr>
+    <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
+    <hr>
+    <input type="text" class="form-control" placeholder="Busqueda..." (keyup.enter)="getData()"
+        [(ngModel)]="texto_autor">
+</div>
+<hr>
+<table class="table table-box">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>IdAutor</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Nacionalidad</th>
+            <th>Sexo</th>
+            <th>F. Nacimiento</th>
+            <th style="width: 50px;">Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (autor of authors; track $index) {
+        <tr (dblclick)="ver(autor)" (click)="seleccionar(autor)"
+            [ngClass]="{'active': seleccionado.idautor == autor.idautor}">
+            <td class="text-center"> {{ $index + 1 }} </td>
+            <td class="text-center"> {{ autor.idautor }} </td>
+            <td> {{ autor.nombre | titlecase }} </td>
+            <td> {{ autor.apellidos | titlecase }} </td>
+            <td class="text-center"> {{ autor.nacionalidad }} </td>
+            <td class="text-center"> {{ autor.sexo }} </td>
+            <td class="text-center"> {{ autor.fecha_nacimiento | date: 'dd/MM/yyyy' }} </td>
+
+            <td nowrap>
+                <div class="d-flex gap-1">
+                    <button class="btn btn-md-custom btn-primary" (click)="editarAutor(autor)">Editar</button>
+                    <button class="btn btn-md-custom btn-danger" (click)="eliminarAutor(autor)">Eliminar</button>
+                    <!-- <button class="btn btn-md-custom btn-warning" (dblclick)="ver(autor)" >Ver</button> -->
+                </div>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>

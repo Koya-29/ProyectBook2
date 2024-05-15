@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <div class="modal-title">
+        DATA AUTHOR
+    </div>
+    <button type="button" class="btn-close" (click)="cerrar()"></button>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <td> <b>Nombre:</b> </td>
+                <td> {{autor.nombre | titlecase}} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Apellidos:</b> </td>
+                <td> {{ autor.apellidos | titlecase}} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Nacionalidad:</b> </td>
+                <td> {{ autor.nacionalidad }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Sexo:</b> </td>
+                <td> {{ autor.sexo }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>F.Nacimiento:</b> </td>
+                <td> {{ autor.fecha_nacimiento | date: 'dd/MM/yyyy' }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>IdAutor:</b> </td>
+                <td>{{ autor.idautor }} </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table class="table " style="margin-top: 2rem;">
+        <thead>
+            <tr>
+                <th>Libro</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(libro of libros; track libro.idlibro; let i = $index){
+            <tr>
+                <td> {{ i +1 }}. {{libro.titulo}}</td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+</div>

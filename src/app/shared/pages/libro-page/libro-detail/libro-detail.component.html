@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <div class="modal-title">
+        DATA BOOK
+    </div>
+    <button type="button" class="btn-close" (click)="cerrar()"></button>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <td> <b>Título:</b> </td>
+                <td> {{ libro.titulo | titlecase}} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Autor:</b> </td>
+                <td>
+                    {{ libro.autor?.nombre }}
+                    {{ libro.autor?.apellidos }}
+                </td>
+            </tr>
+
+            <tr>
+                <td> <b>Editorial:</b> </td>
+                <td> {{ libro.editorial }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Cantidad:</b> </td>
+                <td> {{ libro.cantidad }} </td>
+            </tr>
+
+
+            <tr>
+                <td> <b>C. Disponible:</b> </td>
+                <td> {{ libro.cantidad_disponible }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>C. Prestado:</b> </td>
+                <td> {{ libro.cantidad_prestado }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>IdBook:</b> </td>
+                <td> {{ libro.idlibro }} </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <app-prestamo-list idlibro="{{libro.idlibro}}" />
+    <!-- <app-prestamo-form idlibro="{{libro.idlibro}}" ></app-prestamo-form> -->
+
+
+    <!-- <table class="table" style="margin-top: 2rem;">
+    <thead>
+      <tr>
+        <th>Dia del Prestamo:</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (!prestamo || prestamos.length == 0) {
+      <div>No hay nada que mostrar</div>
+      }
+      @for (prestamo of prestamos; track prestamo.idprestamo; let i = $index) {
+      <tr>
+        <td> {{ i + 1 }}. {{ prestamo.fecha_prestamo | date: 'dd/MM/yyyy'}} -> {{ prestamo.student?.nombre }} {{
+          prestamo.student?.apellidos }} </td>
+      </tr>
+      }
+
+    </tbody>
+  </table> -->
+</div>

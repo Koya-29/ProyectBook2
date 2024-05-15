@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <div class="modal-title">
+    DATA ESTUDENT
+  </div>
+  <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="tipo_documento">T. Documento</span>
+      <select class="form-select" id="inputGroupSelect01" formControlName="tipo_documento">
+        <option value="" disabled>Seleccione documento</option>
+        @for (documento of tipos_documentos; track $index) {
+        <option [value]="documento"> {{ documento }} </option>
+        }
+      </select>
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="numero_documento">N. Documento</span>
+      <input type="text" class="form-control" placeholder="ingrese numero de documento" name="numero_documento"
+        formControlName="numero_documento">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="nombre">Nombres</span>
+      <input type="text" class="form-control" placeholder="ingrese nombre" name="nombre" formControlName="nombre">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="apellidos">Apellidos</span>
+      <input type="text" class="form-control" placeholder="ingrese apellidos" name="apellidos"
+        formControlName="apellidos">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="codigo">Código</span>
+      <input type="text" class="form-control" placeholder="ingrese código" name="codigo" formControlName="codigo">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="fnacimiento">F. Nacimiento</span>
+      <input type="date" class="form-control" placeholder="ingrese f. nacimiento" name="fecha_nacimiento"
+        formControlName="fecha_nacimiento">
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="guardar()">Guardar</button>
+</div>

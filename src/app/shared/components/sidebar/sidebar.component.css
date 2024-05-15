@@ -1,0 +1,7 @@
+.cursor {
+  cursor: pointer;
+}
+#sidebar {
+  background: #5B2C6F;
+  height: 100vh;
+}

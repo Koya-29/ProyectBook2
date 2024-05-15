@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <div class="modal-title">
+    DATA AUTHOR
+  </div>
+  <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form">
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="nombre">Nombres</span>
+      <input type="text" class="form-control" placeholder="ingrese nombre" name="nombre" formControlName="nombre">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="apelldios">Apellidos</span>
+      <input type="text" class="form-control" placeholder="ingrese apellidos" name="apellidos"
+        formControlName="apellidos">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="nacionalidad">Nacionalidad</span>
+      <select class="form-select" id="inputGroupSelect01" formControlName="nacionalidad">
+        <option value="" disabled>Seleccione nacionalidad</option>
+        @for (nacionalidad of nacionalidades; track $index) {
+        <option [value]="nacionalidad"> {{ nacionalidad }} </option>
+        }
+      </select>
+    </div>
+
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="sexo">Sexo</span>
+      <select class="form-select" id="inputGroupSelect01" formControlName="sexo">
+        <option value="" disabled>Seleccione sexo</option>
+        @for (sexo of sexos; track $index) {
+        <option [value]="sexo"> {{ sexo }} </option>
+        }
+      </select>
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="fnacimiento">F. Nacimiento</span>
+      <input type="date" class="form-control" placeholder="ingrese f. nacimiento" name="nacimiento"
+        formControlName="fecha_nacimiento">
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="guardarAutor()">Guardar</button>
+</div>

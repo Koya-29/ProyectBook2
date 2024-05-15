@@ -1,0 +1,48 @@
+<div>
+  <div>
+    <h1>Student List</h1>
+  </div>
+  <hr>
+  <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
+  <hr>
+  <input type="text" class="form-control" placeholder="Busqueda..." (keyup.enter)="getData()" [(ngModel)]="texto_estudiante">
+</div>
+<hr>
+<table class="table table-box text-center">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>IdStudent</th>
+      <th>T. Documento</th>
+      <th>N. Documento</th>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Código</th>
+      <th>F. Nacimiento</th>
+      <th style="width: 50px;">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (estudiante of students; track $index) {
+    <tr (dblclick)="ver(estudiante)" (click)="seleccionar(estudiante)"
+      [ngClass]="{'active': seleccionada.idestudiante == estudiante.idestudiante}">
+      <td> {{ $index + 1 }} </td>
+      <td> {{ estudiante.idestudiante }} </td>
+      <td> {{ estudiante.tipo_documento }} </td>
+      <td> {{ estudiante.numero_documento }} </td>
+      <td class="text-start"> {{ estudiante.nombre | titlecase }} </td>
+      <td class="text-start"> {{ estudiante.apellidos | titlecase }} </td>
+      <td> {{ estudiante.codigo }} </td>
+      <td> {{ estudiante.fecha_nacimiento | date: 'dd/MM/yyyy' }} </td>
+      <td nowrap>
+        <div class="d-flex gap-1">
+          <button class="btn btn-md-custom btn-primary" (click)="editar(estudiante)">Editar</button>
+          <button class="btn btn-md-custom btn-danger" (click)="eliminar(estudiante)">Eliminar</button>
+          <!-- <button class="btn btn-md-custom btn-warning" (click)="ver(estudiante)">Ver</button> -->
+        </div>
+      </td>
+    </tr>
+    }
+
+  </tbody>
+</table>

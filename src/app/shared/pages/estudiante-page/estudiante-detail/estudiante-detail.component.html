@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <div class="modal-title">
+        <b>DATA STUDENT</b>
+    </div>
+    <button type="button" class="btn-close" (click)="cerrar()"></button>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <td> <b>Nombre:</b> </td>
+                <td> {{ estudiante.nombre | titlecase}} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Apellidos:</b> </td>
+                <td> {{ estudiante.apellidos | titlecase}} </td>
+            </tr>
+
+            <tr>
+                <td> <b>T. Documento:</b> </td>
+                <td> {{ estudiante.tipo_documento }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>N. Documento:</b> </td>
+                <td> {{ estudiante.numero_documento }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>F. Nacimiento:</b> </td>
+                <td> {{ estudiante.fecha_nacimiento | date: 'dd/MM/yyyy' }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>Código:</b> </td>
+                <td> {{ estudiante.codigo }} </td>
+            </tr>
+
+            <tr>
+                <td> <b>IdStudent:</b> </td>
+                <td> {{ estudiante.idestudiante }} </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+    <app-prestamo-list idestudiante="{{estudiante.idestudiante}}" />
+    <!-- <table class="table" style="margin-top: 2rem;">
+    <thead>
+      <tr>
+        <th>Devolución de Libros:</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @if (!prestamo || prestamos.length == 0) { <div>No tiene ningun libro pendiente
+      </div>
+      }
+      @for (prestamo of prestamos; track prestamo.idprestamo; let i = $index) {
+      <tr>
+        <td> {{ i +1 }}. {{ prestamo.fecha_devolucion| date: 'dd/MM/yyyy' }} -> {{ prestamo.book?.titulo }} </td>
+      </tr>
+      }
+    </tbody>
+
+  </table> -->
+</div>

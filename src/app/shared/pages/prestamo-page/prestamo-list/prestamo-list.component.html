@@ -1,0 +1,55 @@
+<div>
+    <div>
+        <h1>PRESTAMO DE
+            @if (idestudiante != '') {
+            ESTUDIANTE
+            }
+            @if (idlibro != '') {
+            LIBRO
+            }
+
+
+        </h1>
+    </div>
+    <hr>
+    <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
+    <hr>
+    <input type="text" placeholder="Buscador..." class="form-control" (keyup.enter)="getData()" [(ngModel)]="texto_prestamo">
+</div>
+<hr>
+<table class="table table-box text-center">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>IdLoan</th>
+            <th>F. Prestamo</th>
+            <th>F. Devolución</th>
+            <th>Libro</th>
+            <th>Estudiante</th>
+            <th style="width: 50px;">Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (prestamo of loans; track $index) {
+        <tr (dblclick)="ver(prestamo)" (click)="seleccionar(prestamo)"
+            [ngClass]="{'active': seleccionado.idprestamo == prestamo.idprestamo}">
+            <td> {{ $index + 1 }} </td>
+            <td> {{ prestamo.idprestamo }} </td>
+            <td> {{ prestamo.fecha_prestamo | date: 'dd/MM/yyyy' }} </td>
+            <td> {{ prestamo.fecha_devolucion | date: 'dd/MM/yyyy'}} </td>
+            <td class="text-start"> {{ prestamo.book?.titulo }} </td>
+            <td class="text-start">
+                {{ prestamo.student?.nombre }}
+                {{ prestamo.student?.apellidos }}
+            </td>
+            <td nowrap>
+                <div class="d-flex gap-1">
+                    <button class="btn btn-md-custom btn-primary" (click)="editar(prestamo)">Editar</button>
+                    <button class="btn btn-md-custom btn-danger" (click)="eliminar(prestamo)">Eliminar</button>
+                    <!-- <button class="btn btn-md-custom btn-warning" (click)="ver(prestamo)">Ver</button> -->
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

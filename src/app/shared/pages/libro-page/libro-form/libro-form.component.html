@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <div class="modal-title">
+    DATA BOOK
+  </div>
+  <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form">
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="titulo">Titulo</span>
+      <input type="text" class="form-control" placeholder="ingrese titulo" name="titulo" formControlName="titulo">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="editorial">Editorial</span>
+      <input type="text" class="form-control" placeholder="ingrese editorial" name="editorial"
+        formControlName="editorial">
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text" id="autor">Autores</span>
+      <select class="form-select" id="inputGroupSelect01" formControlName="autor">
+        <option value="" disabled>Seleccione autor</option>
+        @for (autor of autores; track autor.idautor) {
+        <option value="{{ autor.idautor }}"> ({{ autor.idautor }}) -> {{ autor.nombre }} {{ autor.apellidos }} </option>
+        }
+      </select>
+    </div>
+
+    <div class="input-group input-group-md mb-3">
+      <span class="input-group-text">Cantidad</span>
+      <input type="text" id="cantidad" class="form-control" placeholder="ingrese cantidad" name="cantidad"
+        formControlName="cantidad">
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="guardar()">Guardar</button>
+</div>

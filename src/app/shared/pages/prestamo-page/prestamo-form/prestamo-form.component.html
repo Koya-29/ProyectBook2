@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <div class="modal-title">
+        DATA LOAN
+    </div>
+    <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form">
+
+        <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="fecha_prestamo">F. Prestamo</span>
+            <input type="date" class="form-control" placeholder="ingrese fecha prestamo" name="fecha_prestamo"
+                formControlName="fecha_prestamo">
+        </div>
+
+        <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="fecha_devolucion">F. Devolución</span>
+            <input type="date" class="form-control" placeholder="ingrese fecha devolución" name="fecha_devolucion"
+                formControlName="fecha_devolucion">
+        </div>
+
+
+        <div class="input-group input-group-md mb-3">
+            <span class="input-group-text">Estudiante</span>
+            <select class="form-select" id="inputGroupSelect01" formControlName="estudiante">
+                <option value="" >Seleccione Estudiante</option>
+                @for(estudiante of estudiantes; track estudiante.idestudiante){
+                <option value="{{ estudiante.idestudiante }}"  > {{
+                    estudiante.idestudiante }} -> {{ estudiante.nombre }} {{ estudiante.apellidos }} </option>
+                }
+            </select>
+        </div>
+       
+
+        <div class="input-group input-group-md mb-3">
+            <span class="input-group-text">Libro</span>
+            <select class="form-select" id="inputGroupSelect01" formControlName="libro">
+                <option value="" disabled>Seleccione Libro</option>
+
+                @for(libro of libros; track libro.idlibro){
+                <option value="{{ libro.idlibro }}"> {{ libro.idlibro }} -> {{
+                    libro.titulo}} </option>
+                }
+
+            </select>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="guardarPrestamo()">Guardar</button>
+</div>
