@@ -15,8 +15,6 @@ export class PrestamoDetailComponent {
     @Input() nombre_libro: string = ""
     @Input() nombre_estudiante: string = ""
 
-
-
     
     @Input() prestamo: IPrestamo = {} as IPrestamo
 

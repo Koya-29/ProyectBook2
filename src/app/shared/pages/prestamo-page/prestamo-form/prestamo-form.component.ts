@@ -3,11 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IPrestamo, IPrestamoAdd } from '../prestamo.helpers';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrestamoService } from '../prestamo.service';
-import { IEstudiante } from '../../estudiante-page/estudiante.helpers';
 import { ILibro } from '../../libro-page/libro.helpers';
 import { EstudianteService } from '../../estudiante-page/estudiante.service';
 import { LibroService } from '../../libro-page/libro.service';
 import { DatePipe } from '@angular/common';
+import { IEstudiante } from '../../estudiante-page/estudiante.helpers';
 
 @Component({
     selector: 'app-prestamo-form',
@@ -34,6 +34,8 @@ export class PrestamoFormComponent {
     private estudianteService = inject(EstudianteService)
     private libroService = inject(LibroService)
 
+    estados = this.prestamoService.estados
+
     @Input() idlibro: string = "";
     @Input() idestudiante: string = "";
 
@@ -43,7 +45,8 @@ export class PrestamoFormComponent {
         'fecha_prestamo': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
         'fecha_devolucion': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
         'estudiante': new FormControl('', [Validators.required]),
-        'libro': new FormControl('', [Validators.required])
+        'libro': new FormControl('', [Validators.required]),
+        'estado': new FormControl('', [Validators.required])
     })
     //creamos un formulario mediante el modulo  FORMGROUP y definiendo variedad de campos con FOMRCONTROL
 
@@ -66,7 +69,8 @@ export class PrestamoFormComponent {
                 fecha_prestamo: this.prestamo?.fecha_prestamo,
                 fecha_devolucion: this.prestamo?.fecha_devolucion,
                 estudiante: this.prestamo?.estudiante_idestudiante + "",
-                libro: this.prestamo?.libro_idlibro + ""
+                libro: this.prestamo?.libro_idlibro + "",
+                estado: this.prestamo?.estado
             })
         }
         else if (this.accion == "add") {
@@ -84,7 +88,7 @@ export class PrestamoFormComponent {
         //el codigo dentro del TRY se ejecutara  y si se produce algun error sera capturado en CATCH
         try {
             //creamos una variable la cual utilizaremos la palabra AWAIT
-            let result = await this.estudianteService.getData({})
+            let result = await this.estudianteService.list({})
 
             if (result.state == "success") {
                 this.estudiantes = result.data ?? []
@@ -119,6 +123,9 @@ export class PrestamoFormComponent {
     get libroControl(): FormControl {
         return this.form.get('libro') as FormControl
     }
+    get estadoControl(): FormControl {
+        return this.form.get('estado') as FormControl
+    }
 
     cerrarModal() {
         this.activeModal.dismiss("Modal cerrado con exito")
@@ -135,7 +142,7 @@ export class PrestamoFormComponent {
                 libro_idlibro: +datos.libro!,
                 estudiante_idestudiante: +datos.estudiante!,
                 createBy: '1',
-                estado: '1'
+                estado: datos.estado!
             }
 
             let result = await this.prestamoService.agregarLoan(prestamo);
@@ -159,7 +166,8 @@ export class PrestamoFormComponent {
                 fecha_devolucion: datos.fecha_devolucion!,
                 idprestamo: this.prestamo!.idprestamo,
                 estudiante_idestudiante: +datos.estudiante!,
-                libro_idlibro: +datos.libro!
+                libro_idlibro: +datos.libro!,
+                estado: datos.estado!
             }
 
             let result = await this.prestamoService.editarLoan(this.prestamo?.idprestamo!, prestamo);

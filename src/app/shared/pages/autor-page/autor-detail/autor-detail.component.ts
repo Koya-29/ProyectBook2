@@ -4,11 +4,12 @@ import { IAutor } from '../autor.helpers';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { LibroService } from '../../libro-page/libro.service';
 import { ILibro } from '../../libro-page/libro.helpers';
+import { LibroListComponent } from '../../libro-page/libro-list/libro-list.component';
 
 @Component({
     selector: 'app-autor-detail',
     standalone: true,
-    imports: [DatePipe, TitleCasePipe],
+    imports: [DatePipe, TitleCasePipe, LibroListComponent],
     templateUrl: './autor-detail.component.html',
     styleUrl: './autor-detail.component.css'
 })

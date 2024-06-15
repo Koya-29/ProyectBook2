@@ -25,9 +25,30 @@ export interface IPrestamoAdd {
     student?: IEstudiante;
 }
 
-export interface IPrestamoFiltro{
+export interface IPrestamoFiltro {
     estudiante_idestudiante?: string;
     libro_idlibro?: string;
-    texto?: string; 
+    texto?: string;
 }
 
+export interface IPrestamoState {
+    code: string,
+    denomination: string,
+}
+
+export enum EPrestamoState {
+
+    DEVUELTO = '0',
+    PRESTADO = '1',
+}
+
+export const PrestamoStateDictionary = {
+    [EPrestamoState.PRESTADO.toString()]: 'Prestado',
+    [EPrestamoState.DEVUELTO.toString()]: 'Devuelto'
+}
+
+export const PrestamoStateColor = {
+    [EPrestamoState.PRESTADO.toString()]: 'warning',
+    [EPrestamoState.DEVUELTO.toString()]: 'success',
+
+}

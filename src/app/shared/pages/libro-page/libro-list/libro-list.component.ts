@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { LibroService } from '../libro.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ILibro } from '../libro.helpers';
@@ -6,15 +6,18 @@ import { LibroFormComponent } from '../libro-form/libro-form.component';
 import { LibroDetailComponent } from '../libro-detail/libro-detail.component';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TextStateComponent } from '../../../ui/text-state/text-state.component';
 
 @Component({
     selector: 'app-libro-list',
     standalone: true,
-    imports: [TitleCasePipe, NgClass, FormsModule],
+    imports: [TitleCasePipe, NgClass, FormsModule, TextStateComponent],
     templateUrl: './libro-list.component.html',
     styleUrl: './libro-list.component.css'
 })
 export class LibroListComponent {
+
+    @Input() autor: string = ""
 
     books: ILibro[] = []
 
@@ -31,16 +34,7 @@ export class LibroListComponent {
         this.selected = idlibro
     }
 
-    buscador(data: string) {
-        console.log({ data });
-        if (data.length === 0) {
-            this.getData();
 
-        } else {
-
-            this.books = this.books.filter(libro => libro.titulo.toLowerCase().includes(data.toLowerCase()));
-        }
-    }
     texto = ""
     // AQUI SOLO DEBISTE AUMENTAR ASI COMO EN LS PRESTAMOS EL TEMA DE PARAMS
     // SE ENTENDIO? 
@@ -49,7 +43,8 @@ export class LibroListComponent {
     async getData() {
         try {
             let date = await this.libroServicio.getData({
-                texto: this.texto
+                texto: this.texto,
+                autor_idautor: this.autor
             })
             if (date && date.state == 'success') {
                 this.books = date.data ?? []
@@ -61,7 +56,7 @@ export class LibroListComponent {
 
     async add() {
         try {
-            let ref = this.modalServicio.open(LibroFormComponent)
+            let ref = this.modalServicio.open(LibroFormComponent, { keyboard: false, backdrop: 'static' })
             ref.componentInstance.accion = "add"
             let libro: ILibro = await ref.result;
             this.books.unshift(libro)
@@ -82,7 +77,7 @@ export class LibroListComponent {
 
     async editar(libro: ILibro) {
         try {
-            let ref = this.modalServicio.open(LibroFormComponent)
+            let ref = this.modalServicio.open(LibroFormComponent, { keyboard: false, backdrop: 'static' })
             ref.componentInstance.accion = "edit"
             ref.componentInstance.libro = libro;
 

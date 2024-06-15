@@ -46,6 +46,16 @@
             </select>
         </div>
 
+        <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="estado">Estado</span>
+            <select class="form-select" id="inputGroupSelect01" formControlName="estado">
+                <option value="" disabled>Seleccione estado</option>
+                @for (estado of estados; track $index) {
+                <option [value]="estado.code"> {{ estado.denomination }} </option>
+                }
+            </select>
+        </div>
+
     </form>
 </div>
 

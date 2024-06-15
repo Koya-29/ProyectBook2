@@ -1,30 +1,35 @@
 export interface IEstudiante {
-  idestudiante: number;
-  numero_documento: string;
-  tipo_documento: string;
-  nombre: string;
-  apellidos: string;
-  codigo: string;
-  fecha_nacimiento: string;
-  createBy?: string;
-  createAt?: string;
-  estado?: string;
+    idestudiante: number;
+    numero_documento: string;
+    tipo_documento: string;
+    nombre: string;
+    apellidos: string;
+    codigo: string;
+    fecha_nacimiento: string;
+    createBy?: string;
+    createAt?: string;
+    estado?: string;
 }
 
 export interface IEstudianteAdd {
-  numero_documento: string;
-  tipo_documento: string;
-  nombre: string;
-  apellidos: string;
-  codigo: string;
-  fecha_nacimiento: string;
-  createBy?: string;
-  estado: string;
+    numero_documento: string;
+    tipo_documento: string;
+    nombre: string;
+    apellidos: string;
+    codigo: string;
+    fecha_nacimiento: string;
+    createBy?: string;
+    estado: string;
 }
 
 export interface IEstudianteFilter {
-  texto?: string
+    texto?: string
 }
+export interface IEstudianteState {
+    code: string;
+    denomination: string;
+}
+
 
 // export interface IEstudianteOmitirUpdat {
 //   createBy?: string;

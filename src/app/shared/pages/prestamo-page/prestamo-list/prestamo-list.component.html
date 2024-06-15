@@ -14,18 +14,20 @@
     <hr>
     <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
     <hr>
-    <input type="text" placeholder="Buscador..." class="form-control" (keyup.enter)="getData()" [(ngModel)]="texto_prestamo">
+    <input type="text" placeholder="Buscador..." class="form-control" (keyup.enter)="getData()"
+        [(ngModel)]="texto_prestamo">
 </div>
 <hr>
 <table class="table table-box text-center">
     <thead>
         <tr>
             <th>#</th>
-            <th>IdLoan</th>
+            <th>ID</th>
             <th>F. Prestamo</th>
             <th>F. Devolución</th>
             <th>Libro</th>
             <th>Estudiante</th>
+            <th>Estado</th>
             <th style="width: 50px;">Opciones</th>
         </tr>
     </thead>
@@ -42,6 +44,11 @@
                 {{ prestamo.student?.nombre }}
                 {{ prestamo.student?.apellidos }}
             </td>
+            <td>
+                <app-text-state [state]="prestamo.estado" [EStateCustom]="diccionario"
+                    [EStateCustomColor]="color"></app-text-state>
+            </td>
+            <!-- <td> {{ (prestamo.estado == '1')? 'Prestado': 'Devuelto'  }} </td> -->
             <td nowrap>
                 <div class="d-flex gap-1">
                     <button class="btn btn-md-custom btn-primary" (click)="editar(prestamo)">Editar</button>

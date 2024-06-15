@@ -1,15 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IPrestamoFiltro } from './prestamo.helpers';
+import { IPrestamoFiltro, IPrestamoState } from './prestamo.helpers';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PrestamoService {
 
-    private apiUrl = 'http://192.168.0.128:7500/loan'
+    private apiUrl = 'http://192.168.0.119:7500/loan'
 
     constructor(private http: HttpClient) { }
+
+    estados: IPrestamoState[] = [
+        {
+            code: '0',
+            denomination: 'Devuelto'
+        },
+        {
+            code: '1',
+            denomination: 'Prestado'
+        },
+    ]
 
     public getData(params: IPrestamoFiltro): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -17,7 +28,7 @@ export class PrestamoService {
                 params: {
                     estudiante_idestudiante: params.estudiante_idestudiante ?? "",
                     libro_idlibro: params.libro_idlibro ?? "",
-                    texto: params.texto??""
+                    texto: params.texto ?? ""
                 }
             }).subscribe({
                 next: result => {

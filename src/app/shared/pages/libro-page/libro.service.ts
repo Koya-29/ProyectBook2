@@ -7,7 +7,7 @@ import { ILibroFilter } from './libro.helpers';
 })
 export class LibroService {
 
-  private apiUrl = 'http://192.168.0.128:7500/book'
+  private apiUrl = 'http://192.168.0.119:7500/book'
 
   constructor(private http: HttpClient) { }
 

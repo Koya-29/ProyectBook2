@@ -11,20 +11,21 @@
     <hr>
     <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
     <hr>
-    <input type="text" class="form-control" placeholder="Busqueda..." (keyup.enter)="getData()"
-        [(ngModel)]="texto_autor">
+    <!-- <input type="text" class="form-control" placeholder="Busqueda..." (keyup.enter)="getData()"
+        [(ngModel)]="texto_autor"> -->
 </div>
 <hr>
 <table class="table table-box">
     <thead>
         <tr>
             <th>#</th>
-            <th>IdAutor</th>
+            <th>ID</th>
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Nacionalidad</th>
             <th>Sexo</th>
             <th>F. Nacimiento</th>
+            <th>Estado</th>
             <th style="width: 50px;">Opciones</th>
         </tr>
     </thead>
@@ -39,12 +40,14 @@
             <td class="text-center"> {{ autor.nacionalidad }} </td>
             <td class="text-center"> {{ autor.sexo }} </td>
             <td class="text-center"> {{ autor.fecha_nacimiento | date: 'dd/MM/yyyy' }} </td>
-
+            <td class="text-center">
+                <app-text-state [state]="autor.estado"></app-text-state>
+            </td>
             <td nowrap>
                 <div class="d-flex gap-1">
                     <button class="btn btn-md-custom btn-primary" (click)="editarAutor(autor)">Editar</button>
                     <button class="btn btn-md-custom btn-danger" (click)="eliminarAutor(autor)">Eliminar</button>
-                    <!-- <button class="btn btn-md-custom btn-warning" (dblclick)="ver(autor)" >Ver</button> -->
+                    <!-- <button class="btn btn-md-custom btn-warning" (dblclick)="ver(autor)" >Ver</button>  -->
                 </div>
             </td>
         </tr>

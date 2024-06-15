@@ -6,22 +6,23 @@ import { DatePipe, NgClass, TitleCasePipe } from '@angular/common';
 import { AutorFormComponent } from '../autor-form/autor-form.component';
 import { AutorDetailComponent } from '../autor-detail/autor-detail.component';
 import { FormsModule } from '@angular/forms';
+import { TextStateComponent } from '../../../ui/text-state/text-state.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-autor-list',
     standalone: true,
-    imports: [DatePipe, TitleCasePipe, NgClass, FormsModule],
+    imports: [DatePipe, TitleCasePipe, NgClass, FormsModule, TextStateComponent],
     templateUrl: './autor-list.component.html',
     styleUrl: './autor-list.component.css'
 })
 export class AutorListComponent {
 
-
     authors: IAutor[] = []
-
 
     private autorService = inject(AutorService)
     private modalServicio = inject(NgbModal)
+    private toastrServicio = inject(ToastrService)
 
     selected = "F"
     seleccionado: IAutor = {} as IAutor;
@@ -40,22 +41,20 @@ export class AutorListComponent {
 
     texto_autor = ""
 
+
     async getData() {
-        try {
-            let data = await this.autorService.getData({
-                texto: this.texto_autor
-            })
-            if (data && data.state == "success") {
-                this.authors = data.data ?? []
-            }
-        } catch (error) {
-            console.log(error)
+        let data = await this.autorService.list({
+            texto: this.texto_autor
+        })
+        if (data && data.state == "success") {
+            this.toastrServicio.success('con exito', 'Se Inicio')
+            this.authors = data.data ?? []
         }
     }
 
     async add() {
         try {
-            let ref = this.modalServicio.open(AutorFormComponent)
+            let ref = this.modalServicio.open(AutorFormComponent, { keyboard: false, backdrop: 'static' })
             ref.componentInstance.accion = "add"
             let autor: IAutor = await ref.result;
             this.authors.unshift(autor)
@@ -64,23 +63,9 @@ export class AutorListComponent {
         }
     }
 
-
-
-    async eliminarAutor(autor: IAutor) {
-        let result = await this.autorService.eliminarAuthor(autor.idautor)
-        console.log(result)
-        if (result && result.state == "success") {
-            let index = this.authors.findIndex(x => x.idautor == autor.idautor)
-            console.log(index);
-            if (index != -1) {
-                this.authors.splice(index, 1)
-            }
-        }
-    }
-
     async editarAutor(autor: IAutor) {
         try {
-            let ref = this.modalServicio.open(AutorFormComponent)
+            let ref = this.modalServicio.open(AutorFormComponent, { keyboard: false, backdrop: 'static' })
             ref.componentInstance.accion = "edit"
             ref.componentInstance.autor = autor;
 
@@ -88,6 +73,18 @@ export class AutorListComponent {
             Object.assign(autor, _autor)
         } catch (error) {
 
+        }
+    }
+
+    async eliminarAutor(autor: IAutor) {
+        let result = await this.autorService.delete(autor)
+        console.log(result)
+        if (result && result.state == "success") {
+            let index = this.authors.findIndex(x => x.idautor == autor.idautor)
+            console.log(index);
+            if (index != -1) {
+                this.authors.splice(index, 1)
+            }
         }
     }
 
@@ -101,5 +98,29 @@ export class AutorListComponent {
 
         }
     }
-
 }
+
+// async getData() {
+//     try {
+//         let data = await this.autorService.getData({
+//             texto: this.texto_autor
+//         })
+//         if (data && data.state == "success") {
+//             this.authors = data.data ?? []
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// async eliminarAutor(autor: IAutor) {
+//     let result = await this.autorService.eliminarAuthor(autor.idautor)
+//     console.log(result)
+//     if (result && result.state == "success") {
+//         let index = this.authors.findIndex(x => x.idautor == autor.idautor)
+//         console.log(index);
+//         if (index != -1) {
+//             this.authors.splice(index, 1)
+//         }
+//     }
+// }

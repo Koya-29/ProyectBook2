@@ -1,0 +1,42 @@
+._estados {
+    text-align: center;
+    font-weight: bold;
+    padding: 0.1rem 0.75rem;
+    border-radius: 0.5rem;
+
+    width: fit-content;
+    margin: 0 auto;
+
+    &._estadosFinalizado,
+    &._estadosPendiente,
+    &.info {
+        color: #4b83fe;
+        background: #ebf2ff;
+    }
+
+    // &._estadosBloqueado,
+    &._estadosInactivo,
+    &.danger,
+    &._estadosBloqueado {
+        color: red;
+        background: #ffdede;
+    }
+    // &._estadosPendiente,
+    &._estadosActivo,
+    &.success {
+        color: #26cc2c;
+        background: #dcffe4;
+    }
+
+    //alert
+    &._estadosAlerta,
+    &.warning {
+        color: #ff9f00;
+        background: #fff3d6;
+    }
+
+    // &._estadosPendiente {
+    //     color: #313131;
+    //     background: #ffefbe;
+    // }
+}

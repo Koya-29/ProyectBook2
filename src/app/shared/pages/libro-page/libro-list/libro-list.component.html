@@ -1,53 +1,58 @@
 <div>
-  <div>
-    <h1>Book List</h1>
-  </div>
-  <hr>
-  <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
+    <div>
+        <h1>Book List</h1>
+    </div>
+    <hr>
+    <button class="btn btn-primary btn-lg-custom" (click)="add()">Añadir</button>
 </div>
 <hr>
-<input type="text" placeholder="Busqueda..." class="form-control" (keyup.enter)="buscador(text_nuevo.value)" #text_nuevo>
+<!-- <input type="text" placeholder="Busqueda..." class="form-control" (keyup.enter)="buscador(text_nuevo.value)" #text_nuevo> -->
 <!-- Para menejar ese tema de la variable y el input tenemos el NgModel -->
 <br>
 <input type="text" placeholder="Busqueda 2..." class="form-control" (keyup.enter)="getData()" [(ngModel)]="texto">
 <hr>
 <table class="table table-box ">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>IdBook</th>
-      <th>Autor</th>
-      <th>Cantidad</th>
-      <th>C. Disponible</th>
-      <th>C. Prestado</th>
-      <th>Editorial</th>
-      <th>Título</th>   
-      <th style="width: 50px;">Opciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (libro of books; track $index) {
-    <tr (dblclick)="ver(libro)" (click)="seleccionar(libro)" [ngClass]="{'active': selected.idlibro == libro.idlibro}">
-      <td class="text-center"> {{ $index + 1 }} </td>
-      <td class="text-center"> {{ libro.idlibro }} </td>
-      <td>
-        {{ libro.autor?.nombre}}
-        {{ libro.autor?.apellidos }}
-      </td>
-      <td class="text-center"> {{ libro.cantidad }} </td>
-      <td class="text-center"> {{ libro.cantidad_disponible }} </td>
-      <td class="text-center"> {{ libro.cantidad_prestado }} </td>
-      <td> {{ libro.editorial }} </td>
-      <td> {{ libro.titulo | titlecase }} </td>
-      <td nowrap>
-        <div class="d-flex gap-1">
-          <button class="btn btn-md-custom btn-primary" (click)="editar(libro)">Editar</button>
-          <button class="btn btn-md-custom btn-danger" (click)="eliminar(libro)">Eliminar</button>
-          <!-- <button class="btn btn-md-custom btn-warning" (click)="ver(libro)">Ver</button> -->
-        </div>
-      </td>
-    </tr>
-    }
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>Autor</th>
+            <th>Cantidad</th>
+            <th>C. Disponible</th>
+            <th>C. Prestado</th>
+            <th>Editorial</th>
+            <th>Título</th>
+            <th>Estado</th>
+            <th style="width: 50px;">Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (libro of books; track $index) {
+        <tr (dblclick)="ver(libro)" (click)="seleccionar(libro)"
+            [ngClass]="{'active': selected.idlibro == libro.idlibro}">
+            <td class="text-center"> {{ $index + 1 }} </td>
+            <td class="text-center"> {{ libro.idlibro }} </td>
+            <td>
+                {{ libro.autor?.nombre}}
+                {{ libro.autor?.apellidos }}
+            </td>
+            <td class="text-center"> {{ libro.cantidad }} </td>
+            <td class="text-center"> {{ libro.cantidad_disponible }} </td>
+            <td class="text-center"> {{ libro.cantidad_prestado }} </td>
+            <td> {{ libro.editorial }} </td>
+            <td> {{ libro.titulo | titlecase }} </td>
+            <td class="text-center">
+                <app-text-state [state]="libro.estado"></app-text-state>
+            </td>
+            <td nowrap>
+                <div class="d-flex gap-1">
+                    <button class="btn btn-md-custom btn-primary" (click)="editar(libro)">Editar</button>
+                    <button class="btn btn-md-custom btn-danger" (click)="eliminar(libro)">Eliminar</button>
+                    <!-- <button class="btn btn-md-custom btn-warning" (click)="ver(libro)">Ver</button> -->
+                </div>
+            </td>
+        </tr>
+        }
 
-  </tbody>
+    </tbody>
 </table>

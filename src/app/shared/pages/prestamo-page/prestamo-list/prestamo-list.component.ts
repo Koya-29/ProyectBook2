@@ -3,14 +3,15 @@ import { Component, Input, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrestamoDetailComponent } from '../prestamo-detail/prestamo-detail.component';
 import { PrestamoFormComponent } from '../prestamo-form/prestamo-form.component';
-import { IPrestamo } from '../prestamo.helpers';
+import { IPrestamo, PrestamoStateColor, PrestamoStateDictionary } from '../prestamo.helpers';
 import { PrestamoService } from '../prestamo.service';
 import { FormsModule } from '@angular/forms';
+import { TextStateComponent } from '../../../ui/text-state/text-state.component';
 
 @Component({
     selector: 'app-prestamo-list',
     standalone: true,
-    imports: [DatePipe, NgClass, PrestamoDetailComponent, FormsModule],
+    imports: [DatePipe, NgClass, PrestamoDetailComponent, FormsModule, TextStateComponent],
     templateUrl: './prestamo-list.component.html',
     styleUrl: './prestamo-list.component.css'
 })
@@ -24,6 +25,9 @@ export class PrestamoListComponent {
 
     private prestamosServicio = inject(PrestamoService)
     private modalService = inject(NgbModal)
+
+    diccionario = PrestamoStateDictionary;
+    color = PrestamoStateColor
 
     ngOnInit() {
         this.getData()
@@ -55,7 +59,7 @@ export class PrestamoListComponent {
 
     async add() {
         try {
-            let ref = this.modalService.open(PrestamoFormComponent)
+            let ref = this.modalService.open(PrestamoFormComponent, { keyboard: false, backdrop: 'static' })
             ref.componentInstance.accion = 'add'
             ref.componentInstance.idestudiante = this.idestudiante
             ref.componentInstance.idlibro = this.idlibro
@@ -79,7 +83,7 @@ export class PrestamoListComponent {
 
     async editar(prestamo: IPrestamo) {
         try {
-            let ref = this.modalService.open(PrestamoFormComponent)
+            let ref = this.modalService.open(PrestamoFormComponent, { keyboard: false, backdrop: 'static' })
             ref.componentInstance.accion = 'edit'
             ref.componentInstance.prestamo = prestamo;
 
