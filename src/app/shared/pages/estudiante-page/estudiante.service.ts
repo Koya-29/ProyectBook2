@@ -3,7 +3,6 @@ import { IEstudiante, IEstudianteAdd, IEstudianteFilter, IEstudianteState } from
 import { Environment } from '../../../../environmets/environment';
 import { ApiService, ResponseCustom, ResponseGeneral } from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
-import { IAutor, IAutorAdd } from '../autor-page/autor.helpers';
 @Injectable({
     providedIn: 'root'
 })
@@ -60,6 +59,12 @@ export class EstudianteService {
         return result
     }
 }
+
+
+
+
+
+
 
 
 // private apiUrl = 'http://192.168.0.119:7500/student'

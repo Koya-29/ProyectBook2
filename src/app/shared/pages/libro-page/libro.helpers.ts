@@ -37,6 +37,11 @@ export interface ILibroState {
     denomination: string
 }
 
+export interface ILibroState {
+    code: string;
+    denomination: string
+}
+
 // export interface Autor {
 //   idautor:          number;
 //   nombre:           string;

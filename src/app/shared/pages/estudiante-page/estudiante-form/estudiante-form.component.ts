@@ -24,12 +24,12 @@ export class EstudianteFormComponent {
     estados = this.estudianteServicio.estados
 
     form = new FormGroup({
-        'tipo_documento': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'numero_documento': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
+        'tipo_documento': new FormControl('', [Validators.required]),
+        'numero_documento': new FormControl('', [Validators.minLength(2), Validators.maxLength(11), Validators.required]),
         'nombre': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
         'apellidos': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'codigo': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'fecha_nacimiento': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
+        'codigo': new FormControl('', [Validators.minLength(2), Validators.maxLength(11), Validators.required]),
+        'fecha_nacimiento': new FormControl('', [Validators.required]),
         'estado': new FormControl('1', [Validators.required]),
     })
 

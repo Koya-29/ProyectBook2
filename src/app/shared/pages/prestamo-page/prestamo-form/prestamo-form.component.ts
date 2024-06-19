@@ -42,8 +42,8 @@ export class PrestamoFormComponent {
 
     //creamos un formulario mediante el modulo  FORMGROUP y definiendo variedad de campos con FOMRCONTROL
     form = new FormGroup({
-        'fecha_prestamo': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'fecha_devolucion': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
+        'fecha_prestamo': new FormControl('', [Validators.required]),
+        'fecha_devolucion': new FormControl('', [Validators.required]),
         'estudiante': new FormControl('', [Validators.required]),
         'libro': new FormControl('', [Validators.required]),
         'estado': new FormControl('', [Validators.required])
@@ -59,7 +59,7 @@ export class PrestamoFormComponent {
         //llamanmos a los metodos para tener los datos del estudiante y libro
 
 
-        alert(this.idlibro + " / " + this.idestudiante)
+        // alert(this.idlibro + " / " + this.idestudiante)
 
         //en la condicion le preguntamos que si accion es igual a EDIT
         //se actualizan los valores del formulario  con los datos del prestamo selecionado  esto incluye todo lo que esta dentro del
@@ -100,7 +100,7 @@ export class PrestamoFormComponent {
 
     async obtenerLibro() {
         try {
-            let result = await this.libroService.getData({})
+            let result = await this.libroService.list({})
 
             if (result.state == "success") {
                 this.libros = result.data ?? []
@@ -145,16 +145,16 @@ export class PrestamoFormComponent {
                 estado: datos.estado!
             }
 
-            let result = await this.prestamoService.agregarLoan(prestamo);
+            let result = await this.prestamoService.add(prestamo);
 
-            if (result.state == "success") {
+            if (result.state == "success" && result.data) {
 
-                let estudiante = this.estudiantes.find(estudiante => estudiante.idestudiante == result.data.estudiante_idestudiante)
+                let estudiante = this.estudiantes.find(estudiante => estudiante.idestudiante == result.data?.estudiante_idestudiante)
                 if (estudiante) {
                     result.data.student = estudiante
                 }
 
-                let libro = this.libros.find(libro => libro.idlibro == result.data.libro_idlibro)
+                let libro = this.libros.find(libro => libro.idlibro == result.data?.libro_idlibro)
                 if (libro) {
                     result.data.book = libro
                 }
@@ -170,7 +170,7 @@ export class PrestamoFormComponent {
                 estado: datos.estado!
             }
 
-            let result = await this.prestamoService.editarLoan(this.prestamo?.idprestamo!, prestamo);
+            let result = await this.prestamoService.update(prestamo);
 
             if (result.state == "success") {
 
@@ -183,7 +183,5 @@ export class PrestamoFormComponent {
             }
         }
         this.activeModal.close("Se guardo con exito")
-
     }
-
 }

@@ -30,13 +30,16 @@ export class AutorFormComponent {
     form = new FormGroup({
         'nombre': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
         'apellidos': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'nacionalidad': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'sexo': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
-        'fecha_nacimiento': new FormControl('', [Validators.minLength(2), Validators.maxLength(50), Validators.required]),
+        'nacionalidad': new FormControl('', [Validators.required]),
+        'sexo': new FormControl('', [Validators.required]),
+        'fecha_nacimiento': new FormControl('', [Validators.required]),
         'estado': new FormControl('', [Validators.required])
     })
 
     ngOnInit() {
+
+        // alert(this.autor + "hola")
+
         if (this.accion == "edit") {
             this.form.patchValue({
                 nombre: this.autor?.nombre,
@@ -101,7 +104,7 @@ export class AutorFormComponent {
                 sexo: datos.sexo!,
                 fecha_nacimiento: datos.fecha_nacimiento!,
                 estado: datos.estado!
-            }            
+            }
             let result = await this.autorServicio.update(autor);
             if (result.state == "success") {
                 this.activarModal.close(autor)

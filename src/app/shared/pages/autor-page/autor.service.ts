@@ -1,24 +1,20 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { IAutor, IAutorAdd, IAutorFilter, IAutorState, IAutorUpdate } from './autor.helpers';
 import { ApiService, ResponseCustom, ResponseGeneral } from '../../services/api.service';
 import { Environment } from '../../../../environmets/environment';
 import { ToastrService } from 'ngx-toastr';
-import { auto } from '@popperjs/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AutorService {
     // private apiUrl = 'http://192.168.0.119:7500/author';
+    // constructor(private http: HttpClient) { }
 
     private api = `${Environment.biblioteca}/author`
 
     private apiService = inject(ApiService)
     private toastrServicio = inject(ToastrService)
-
-
-    constructor(private http: HttpClient) { }
 
     estados: IAutorState[] = [
         {
@@ -61,7 +57,7 @@ export class AutorService {
         }
         let result = await this.apiService.deletePrivate<ResponseGeneral>(`${this.api}/delete/${autor.idautor}`, { idautor: autor.idautor });
         if (result.state == "success") {
-            this.toastrServicio.success("se elimino el autor")
+            this.toastrServicio.success("Se elimino el autor")
         }
         return result
     }

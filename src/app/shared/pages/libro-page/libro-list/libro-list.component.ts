@@ -7,6 +7,8 @@ import { LibroDetailComponent } from '../libro-detail/libro-detail.component';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TextStateComponent } from '../../../ui/text-state/text-state.component';
+import { ToastrService } from 'ngx-toastr';
+import { ModalEliminarComponent } from '../../../components/modal-eliminar/modal-eliminar.component';
 
 @Component({
     selector: 'app-libro-list',
@@ -23,6 +25,7 @@ export class LibroListComponent {
 
     private libroServicio = inject(LibroService)
     private modalServicio = inject(NgbModal)
+    private toastrServicio = inject(ToastrService)
 
     ngOnInit() {
         this.getData()
@@ -41,16 +44,13 @@ export class LibroListComponent {
     //si Ing, disculpe
     // YA AUMENTA A LOS DEMAS
     async getData() {
-        try {
-            let date = await this.libroServicio.getData({
-                texto: this.texto,
-                autor_idautor: this.autor
-            })
-            if (date && date.state == 'success') {
-                this.books = date.data ?? []
-            }
-        } catch (error) {
-            console.log(error)
+        let date = await this.libroServicio.list({
+            texto: this.texto,
+            autor_idautor: this.autor
+        })
+        if (date && date.state == 'success') {
+            // this.toastrServicio.success('con exito', 'Se inicio')
+            this.books = date.data ?? []
         }
     }
 
@@ -66,13 +66,22 @@ export class LibroListComponent {
     }
 
     async eliminar(libro: ILibro) {
-        let result = await this.libroServicio.eliminarBook(libro.idlibro)
-        if (result && result.state == "success") {
-            let index = this.books.findIndex(x => x.idlibro == libro.idlibro)
-            if (index != -1) {
-                this.books.splice(index, 1)
+        let modalEliminar = this.modalServicio.open(ModalEliminarComponent, { keyboard: false, backdrop: 'static' })
+        try {
+            let result = await modalEliminar.result
+            // let result = await this.libroServicio.delete(libro)
+            if (result === 'eliminar') {
+                result = await this.libroServicio.delete(libro)
             }
-        }
+
+            if (result && result.state == "success") {
+                let index = this.books.findIndex(x => x.idlibro == libro.idlibro)
+                if (index != -1) {
+                    this.books.splice(index, 1)
+                }
+            }
+        } catch (error) { }
+
     }
 
     async editar(libro: ILibro) {
@@ -98,5 +107,4 @@ export class LibroListComponent {
 
         }
     }
-
 }

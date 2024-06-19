@@ -7,6 +7,8 @@ import { IPrestamo, PrestamoStateColor, PrestamoStateDictionary } from '../prest
 import { PrestamoService } from '../prestamo.service';
 import { FormsModule } from '@angular/forms';
 import { TextStateComponent } from '../../../ui/text-state/text-state.component';
+import { ToastrService } from 'ngx-toastr';
+import { ModalEliminarComponent } from '../../../components/modal-eliminar/modal-eliminar.component';
 
 @Component({
     selector: 'app-prestamo-list',
@@ -17,14 +19,14 @@ import { TextStateComponent } from '../../../ui/text-state/text-state.component'
 })
 export class PrestamoListComponent {
 
-
-    @Input() idlibro: string = "";
-    @Input() idestudiante: string = "";
+    private prestamosServicio = inject(PrestamoService)
+    private modalService = inject(NgbModal)
+    private toastrServicio = inject(ToastrService)
 
     loans: IPrestamo[] = []
 
-    private prestamosServicio = inject(PrestamoService)
-    private modalService = inject(NgbModal)
+    @Input() idlibro: string = "";
+    @Input() idestudiante: string = "";
 
     diccionario = PrestamoStateDictionary;
     color = PrestamoStateColor
@@ -43,17 +45,14 @@ export class PrestamoListComponent {
     texto_prestamo = ""
 
     async getData() {
-        try {
-            let date = await this.prestamosServicio.getData({
-                estudiante_idestudiante: this.idestudiante,
-                libro_idlibro: this.idlibro,
-                texto: this.texto_prestamo
-            })
-            if (date && date.state == 'success') {
-                this.loans = date.data ?? []
-            }
-        } catch (error) {
-            console.log(error)
+        let date = await this.prestamosServicio.list({
+            estudiante_idestudiante: this.idestudiante,
+            libro_idlibro: this.idlibro,
+            texto: this.texto_prestamo
+        })
+        if (date && date.state == 'success') {
+            // this.toastrServicio.success('con exito', 'Se inicio')
+            this.loans = date.data ?? []
         }
     }
 
@@ -72,13 +71,20 @@ export class PrestamoListComponent {
 
 
     async eliminar(prestamo: IPrestamo) {
-        let result = await this.prestamosServicio.eliminarLoan(prestamo.idprestamo)
-        if (result && result.state == "success") {
-            let index = this.loans.findIndex(x => x.idprestamo == prestamo.idprestamo)
-            if (index != -1) {
-                this.loans.splice(index, 1)
+        let modalEliminar = this.modalService.open(ModalEliminarComponent, { keyboard: false, backdrop: 'static' })
+        try {
+            let result = await modalEliminar.result
+            if (result === 'eliminar') {
+                result = await this.prestamosServicio.delete(prestamo)
             }
-        }
+            // let result = await this.prestamosServicio.delete(prestamo)
+            if (result && result.state == "success") {
+                let index = this.loans.findIndex(x => x.idprestamo == prestamo.idprestamo)
+                if (index != -1) {
+                    this.loans.splice(index, 1)
+                }
+            }
+        } catch (error) { }
     }
 
     async editar(prestamo: IPrestamo) {

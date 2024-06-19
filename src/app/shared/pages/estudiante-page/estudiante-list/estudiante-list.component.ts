@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { IEstudiante } from '../estudiante.helpers';
 import { TextStateComponent } from '../../../ui/text-state/text-state.component';
 import { ToastrService } from 'ngx-toastr';
-
+import { ModalEliminarComponent } from '../../../components/modal-eliminar/modal-eliminar.component';
 @Component({
     selector: 'app-estudiante-list',
     standalone: true,
@@ -22,7 +22,7 @@ export class EstudianteListComponent {
 
     private estudianteServicio = inject(EstudianteService)
     private modalServicio = inject(NgbModal)
-    private toastrServicio = -inject(ToastrService)
+    // private toastrServicio = inject(ToastrService)
 
     seleccionada: IEstudiante = {} as IEstudiante
 
@@ -42,7 +42,7 @@ export class EstudianteListComponent {
             texto: this.texto_estudiante
         })
         if (date && date.state == "success") {
-
+            // this.toastrServicio.success('con exito', 'Se inicio')
             this.students = date.data ?? []
         }
     }
@@ -73,14 +73,22 @@ export class EstudianteListComponent {
 
 
     async eliminar(estudiante: IEstudiante) {
-        let result = await this.estudianteServicio.delete(estudiante)
-        console.log(result)
-        if (result && result.state == "success") {
-            let index = this.students.findIndex(x => x.idestudiante == estudiante.idestudiante)
-            if (index != -1) {
-                this.students.splice(index, 1)
+
+        let modalEliminar = this.modalServicio.open(ModalEliminarComponent, { keyboard: false, backdrop: 'static' })
+        try {
+            let result = await modalEliminar.result
+            // let result = await this.estudianteServicio.delete(estudiante)
+            if (result === "eliminar") {
+                result = await this.estudianteServicio.delete(estudiante)
             }
-        }
+            // console.log(result)
+            if (result && result.state == "success") {
+                let index = this.students.findIndex(x => x.idestudiante == estudiante.idestudiante)
+                if (index != -1) {
+                    this.students.splice(index, 1)
+                }
+            }
+        } catch (error) { }
     }
 
     async ver(estudiante: IEstudiante) {

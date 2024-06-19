@@ -35,8 +35,8 @@ export class AutorDetailComponent {
 
     async ObtenerLibro() {
         try {
-            let result = await this.libroServicio.getData({
-                autor_idautor: this.autor.idautor+""
+            let result = await this.libroServicio.list({
+                autor_idautor: this.autor.idautor + ""
             })
 
             if (result.state == "success") {
@@ -51,5 +51,4 @@ export class AutorDetailComponent {
 
         }
     }
-
 }

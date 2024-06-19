@@ -20,7 +20,6 @@ export declare interface ResponseFile extends ResponseGeneral {
     name_file?: string;
 }
 
-
 @Injectable({
     providedIn: 'root'
 })

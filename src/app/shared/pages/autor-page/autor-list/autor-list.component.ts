@@ -8,6 +8,7 @@ import { AutorDetailComponent } from '../autor-detail/autor-detail.component';
 import { FormsModule } from '@angular/forms';
 import { TextStateComponent } from '../../../ui/text-state/text-state.component';
 import { ToastrService } from 'ngx-toastr';
+import { ModalEliminarComponent } from '../../../components/modal-eliminar/modal-eliminar.component';
 
 @Component({
     selector: 'app-autor-list',
@@ -47,7 +48,7 @@ export class AutorListComponent {
             texto: this.texto_autor
         })
         if (data && data.state == "success") {
-            this.toastrServicio.success('con exito', 'Se Inicio')
+            // this.toastrServicio.success('con exito', 'Se Inicio')
             this.authors = data.data ?? []
         }
     }
@@ -77,15 +78,24 @@ export class AutorListComponent {
     }
 
     async eliminarAutor(autor: IAutor) {
-        let result = await this.autorService.delete(autor)
-        console.log(result)
-        if (result && result.state == "success") {
-            let index = this.authors.findIndex(x => x.idautor == autor.idautor)
-            console.log(index);
-            if (index != -1) {
-                this.authors.splice(index, 1)
+        let modalEliminar = this.modalServicio.open(ModalEliminarComponent, { keyboard: false, backdrop: 'static' })
+        try {
+            let result = await modalEliminar.result
+            // let result = await this.autorService.delete(autor)
+            // console.log(prototipo)
+            if (result === 'eliminar') {
+                result = await this.autorService.delete(autor)
             }
-        }
+            console.log(result)
+            if (result && result.state == "success") {
+                let index = this.authors.findIndex(x => x.idautor == autor.idautor)
+                console.log(index);
+                if (index != -1) {
+                    this.authors.splice(index, 1)
+                }
+            }
+        } catch (error) { }
+
     }
 
     async ver(autor: IAutor) {

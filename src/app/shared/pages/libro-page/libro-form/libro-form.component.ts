@@ -5,7 +5,6 @@ import { ILibro, ILibroAdd } from '../libro.helpers';
 import { LibroService } from '../libro.service';
 import { AutorService } from '../../autor-page/autor.service';
 import { IAutor } from '../../autor-page/autor.helpers';
-import { auto } from '@popperjs/core';
 
 @Component({
     selector: 'app-libro-form',
@@ -25,7 +24,7 @@ export class LibroFormComponent {
     private libroServicio = inject(LibroService)
     private autorServicio = inject(AutorService)
 
-
+    estados = this.libroServicio.estados
 
     form = new FormGroup({
         'cantidad': new FormControl(0, [Validators.minLength(1), Validators.maxLength(600), Validators.required]),
@@ -37,34 +36,33 @@ export class LibroFormComponent {
         'estado': new FormControl('', [Validators.required])
     })
 
+    ngOnInit() {
 
-    // ngOnInit() {
+        this.obtenerDato()
 
-    //     this.obtenerDato()
+        if (this.accion == 'edit') {
+            this.form.patchValue({
+                cantidad: this.libro?.cantidad,
+                cantidad_prestado: this.libro?.cantidad_prestado,
+                cantidad_disponible: this.libro?.cantidad_disponible,
+                editorial: this.libro?.editorial,
+                titulo: this.libro?.titulo,
+                autor: this.libro?.autor_idautor + "",
+                estado: this.libro?.estado
+            })
+        }
+    }
 
-    //     if (this.accion == 'edit') {
-    //         this.form.patchValue({
-    //             cantidad: this.libro?.cantidad,
-    //             cantidad_prestado: this.libro?.cantidad_prestado,
-    //             cantidad_disponible: this.libro?.cantidad_disponible,
-    //             editorial: this.libro?.editorial,
-    //             titulo: this.libro?.titulo,
-    //             autor: this.libro?.autor_idautor + "",
-    //             estado: this.libro?.estado
-    //         })
-    //     }
-    // }
-
-    // async obtenerDato() {
-    //     try {
-    //         let result = await this.autorServicio.getData({})
-    //         if (result.state == "success") {
-    //             this.autores = result.data ?? []
-    //         }
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
+    async obtenerDato() {
+        try {
+            let result = await this.autorServicio.list({})
+            if (result.state == "success") {
+                this.autores = result.data ?? []
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
 
     get cantidadControl(): FormControl {
@@ -107,10 +105,10 @@ export class LibroFormComponent {
                 createBy: '1',
                 estado: datos.estado!,
             }
-            let result = await this.libroServicio.agregarBook(libro);
-            if (result.state == "success") {
-                let autor = this.autores.find(autor => autor.idautor == result.data.autor_idautor)
-                if (auto) {
+            let result = await this.libroServicio.add(libro);
+            if (result.state == "success" && result.data) {
+                let autor = this.autores.find(autor => autor.idautor == result.data?.autor_idautor)
+                if (autor) {
                     result.data.autor = autor;
                 }
                 this.activeModal.close(result.data)
@@ -126,7 +124,7 @@ export class LibroFormComponent {
                 autor_idautor: +datos.autor!,
                 estado: datos.estado!
             }
-            let result = await this.libroServicio.editarBook(this.libro?.idlibro!, libro);
+            let result = await this.libroServicio.update(libro);
             if (result.state == "success") {
                 let autor = this.autores.find(autor => autor.idautor == libro.autor_idautor)
                 libro.autor = autor;
